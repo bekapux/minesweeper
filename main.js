@@ -9,11 +9,11 @@ function resetForm() {
 
 function generateTable(width, height) {
     document.querySelector(".button-grid").innerHTML = "";
-    for (let j = 0; j < height; j++) {
-        for (let i = 0; i < width; i++) {
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
             const element = document.createElement("button");
-            element.setAttribute("x", i);
-            element.setAttribute("y", j);
+            element.setAttribute("x", x);
+            element.setAttribute("y", y);
             mineField.append(element);
         }
     }
