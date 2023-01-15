@@ -1,5 +1,6 @@
 const widthInput = document.getElementById("width");
 const heightInput = document.getElementById("height");
+const mineField = document.querySelector(".button-grid");
 
 function resetForm() {
     widthInput.value = 10;
@@ -13,38 +14,31 @@ function generateTable(width, height) {
             const element = document.createElement("button");
             element.setAttribute("x", i);
             element.setAttribute("y", j);
-            element.addEventListener("contextmenu", function (event) {
-                event.preventDefault();
-                mark(element.getAttribute("x"), element.getAttribute("y"))
-                console.log();
-            });
-            document.querySelector(".button-grid").append(element);
+            mineField.append(element);
         }
     }
-    document.querySelector(
-        ".button-grid"
-    ).style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+    mineField.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
     resetForm();
 }
 
 function mark(x, y) {
     const markedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
-    if(markedButton.style.backgroundColor == "green")
-    {
+    if (markedButton.style.backgroundColor == "green") {
         markedButton.style.backgroundColor = "red";
         return;
     }
-    if(markedButton.style.backgroundColor == "")
-    {
-        markedButton.style.backgroundColor = "green"
+    if (markedButton.style.backgroundColor == "") {
+        markedButton.style.backgroundColor = "green";
     }
-    if(markedButton.style.backgroundColor == "red")
-    {
-        markedButton.style.backgroundColor = ""
+    if (markedButton.style.backgroundColor == "red") {
+        markedButton.style.backgroundColor = "";
     }
 }
 
-function getByttonByXandY() {}
+document.querySelector(".button-grid").addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    mark(e.target.getAttribute("x"), e.target.getAttribute("y"));
+});
 
 let width = 10;
 let height = 10;
