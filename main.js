@@ -13,6 +13,11 @@ function generateTable(width, height) {
             const element = document.createElement("button");
             element.setAttribute("x", i);
             element.setAttribute("y", j);
+            element.addEventListener("contextmenu", function (event) {
+                event.preventDefault();
+                mark(element.getAttribute("x"), element.getAttribute("y"))
+                console.log();
+            });
             document.querySelector(".button-grid").append(element);
         }
     }
@@ -22,7 +27,24 @@ function generateTable(width, height) {
     resetForm();
 }
 
+function mark(x, y) {
+    const markedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
+    if(markedButton.style.backgroundColor == "green")
+    {
+        markedButton.style.backgroundColor = "red";
+        return;
+    }
+    if(markedButton.style.backgroundColor == "")
+    {
+        markedButton.style.backgroundColor = "green"
+    }
+    if(markedButton.style.backgroundColor == "red")
+    {
+        markedButton.style.backgroundColor = ""
+    }
+}
 
+function getByttonByXandY() {}
 
 let width = 10;
 let height = 10;
