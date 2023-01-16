@@ -71,6 +71,19 @@ document.querySelector(".button-grid").addEventListener("contextmenu", (e) => {
     mark(e.target.getAttribute("x"), e.target.getAttribute("y"));
 });
 
+document.querySelector(".button-grid").addEventListener("click", (e) => {
+    e.preventDefault();
+    reveal(e.target.getAttribute("x"), e.target.getAttribute("y"));
+});
+
+function reveal(x, y){
+    const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
+    if(bombs.find(bomb=> bomb.x == x && bomb.y ==y)){
+        clickedButton.innerHTML="💥"
+    }
+    clickedButton.disabled =true;
+}
+
 document.getElementById("props").addEventListener("click", () => {
     width = widthInput.value;
     if (width > 20) width = 20;

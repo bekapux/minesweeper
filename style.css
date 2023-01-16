@@ -32,3 +32,10 @@ button {
     height: 2.5rem;
     width: 2.5rem;
 }
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
