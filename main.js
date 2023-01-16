@@ -1,6 +1,9 @@
 const widthInput = document.getElementById("width");
 const heightInput = document.getElementById("height");
 const mineField = document.querySelector(".button-grid");
+const generateFormBtn = document.getElementById("props");
+const revealBtn = document.getElementById("reveal");
+
 let bombNumber = (widthInput.value * heightInput.value) / 10;
 let bombs = [];
 let width = 10;
@@ -66,25 +69,27 @@ function mark(x, y) {
     }
 }
 
-document.querySelector(".button-grid").addEventListener("contextmenu", (e) => {
+revealBtn.addEventListener('click', revealAll)
+
+mineField.addEventListener("contextmenu", (e) => {
     e.preventDefault();
     mark(e.target.getAttribute("x"), e.target.getAttribute("y"));
 });
 
-document.querySelector(".button-grid").addEventListener("click", (e) => {
+mineField.addEventListener("click", (e) => {
     e.preventDefault();
-    reveal(e.target.getAttribute("x"), e.target.getAttribute("y"));
+    revealCluster(e.target.getAttribute("x"), e.target.getAttribute("y"));
 });
 
-function reveal(x, y){
+function revealCluster(x, y){
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
     if(bombs.find(bomb=> bomb.x == x && bomb.y ==y)){
         clickedButton.innerHTML="💥"
     }
-    clickedButton.disabled =true;
+    clickedButton.disabled = true;
 }
 
-document.getElementById("props").addEventListener("click", () => {
+generateFormBtn.addEventListener("click", () => {
     width = widthInput.value;
     if (width > 20) width = 20;
     height = heightInput.value;
@@ -93,3 +98,11 @@ document.getElementById("props").addEventListener("click", () => {
 });
 
 generateTable(width, height);
+
+function revealAll(){
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            revealCluster(x,y)
+        }
+    }
+}
