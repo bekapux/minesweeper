@@ -41,7 +41,7 @@ function setBombs(width, height) {
         const x = getRandom(width);
         const y = getRandom(height);
 
-        const itemInArray = bombs.find(bomb => bomb.x == x && bomb.y == y);
+        const itemInArray = bombs.find((bomb) => bomb.x == x && bomb.y == y);
         if (itemInArray == null) {
             bombs.push({ x, y });
         }
@@ -55,21 +55,27 @@ function getRandom(n) {
 
 function mark(x, y) {
     const markedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
-    if (markedButton.style.backgroundColor == "blue") {
-        markedButton.style.backgroundColor = "red";
+    if (markedButton.innerHTML == "⛳") {
+        markedButton.innerHTML = "❓";
         return;
     }
-    if (markedButton.style.backgroundColor == "") {
-        markedButton.style.backgroundColor = "blue";
+    if (markedButton.innerHTML == "") {
+        markedButton.innerHTML = "⛳";
         return;
     }
-    if (markedButton.style.backgroundColor == "red") {
-        markedButton.style.backgroundColor = "";
+    if (markedButton.innerHTML == "❓") {
+        markedButton.innerHTML = "";
         return;
     }
 }
 
-revealBtn.addEventListener('click', revealAll)
+function countNearbyBombs(x, y) {
+    return bombs.filter(
+        (bomb) => Math.abs(bomb.x - x) <= 1 && Math.abs(bomb.y - y) <= 1
+    ).length;
+}
+
+revealBtn.addEventListener("click", revealAll);
 
 mineField.addEventListener("contextmenu", (e) => {
     e.preventDefault();
@@ -78,15 +84,44 @@ mineField.addEventListener("contextmenu", (e) => {
 
 mineField.addEventListener("click", (e) => {
     e.preventDefault();
-    revealCluster(e.target.getAttribute("x"), e.target.getAttribute("y"));
+    revealCluster(
+        parseInt(e.target.getAttribute("x")),
+        parseInt(e.target.getAttribute("y"))
+    );
 });
 
-function revealCluster(x, y){
+function revealCluster(x, y) {
+    const nearbyBombs = countNearbyBombs(x, y);
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
-    if(bombs.find(bomb=> bomb.x == x && bomb.y ==y)){
-        clickedButton.innerHTML="💥"
+
+    if(!clickedButton) return;
+
+
+    if (clickedButton.disabled) {
+        return;
     }
+
+    if (bombs.find((bomb) => bomb.x == x && bomb.y == y)) {
+        clickedButton.innerHTML = "💥";
+    } else {
+        clickedButton.innerHTML = nearbyBombs;
+    }
+
     clickedButton.disabled = true;
+
+    if (nearbyBombs > 0) {
+        return;
+    }
+    if (nearbyBombs == 0) {
+        revealCluster(x, y + 1);
+        revealCluster(x, y - 1);
+        revealCluster(x + 1, y + 1);
+        revealCluster(x + 1, y - 1);
+        revealCluster(x + 1, y);
+        revealCluster(x - 1, y - 1);
+        revealCluster(x - 1, y + 1);
+        revealCluster(x - 1, y);
+    }
 }
 
 generateFormBtn.addEventListener("click", () => {
@@ -99,10 +134,10 @@ generateFormBtn.addEventListener("click", () => {
 
 generateTable(width, height);
 
-function revealAll(){
+function revealAll() {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
-            revealCluster(x,y)
+            revealCluster(x, y);
         }
     }
 }
