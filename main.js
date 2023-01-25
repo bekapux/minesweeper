@@ -21,7 +21,7 @@ function setBombNumber(width, height) {
 }
 
 function generateTable(width, height) {
-    isGameOver = false
+    isGameOver = false;
     setBombs(width, height);
 
     document.querySelector(".button-grid").innerHTML = "";
@@ -78,23 +78,8 @@ function countNearbyBombs(x, y) {
     ).length;
 }
 
-revealBtn.addEventListener("click", revealAll);
-
-mineField.addEventListener("contextmenu", (e) => {
-    e.preventDefault();
-    mark(e.target.getAttribute("x"), e.target.getAttribute("y"));
-});
-
-mineField.addEventListener("click", (e) => {
-    e.preventDefault();
-    revealCluster(
-        parseInt(e.target.getAttribute("x")),
-        parseInt(e.target.getAttribute("y"))
-    );
-});
-
 function revealCluster(x, y) {
-    if(isGameOver) return;
+    if (isGameOver) return;
     const nearbyBombs = countNearbyBombs(x, y);
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
 
@@ -106,7 +91,7 @@ function revealCluster(x, y) {
 
     if (bombs.find((bomb) => bomb.x == x && bomb.y == y)) {
         clickedButton.innerHTML = "💥";
-        revealBombs("💥")
+        revealBombs("💥");
         isGameOver = true;
         return;
     } else {
@@ -115,9 +100,9 @@ function revealCluster(x, y) {
 
     clickedButton.disabled = true;
     if (
-        document.querySelectorAll("button:disabled").length == safeClusterCount
+        mineField.querySelectorAll("button:disabled").length == safeClusterCount
     ) {
-        revealBombs();
+        youWon("⛳");
     }
 
     if (nearbyBombs > 0) {
@@ -135,16 +120,24 @@ function revealCluster(x, y) {
     }
 }
 
-function youWon(){
-    console.log("won");
-    revealBombs("⛳");
-    alert('won');
+function revealAll() {
+    for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+            revealCluster(x, y);
+        }
+    }
 }
 
-function revealBombs(symbol="💥") {
+function youWon() {
+    console.log("won");
+    revealBombs("⛳");
+    alert("won");
+}
+
+function revealBombs(symbol = "💥") {
     bombs.forEach((item) => {
         document.querySelector(`[x="${item.x}"][y="${item.y}"]`).innerHTML =
-        symbol;
+            symbol;
     });
 }
 
@@ -156,12 +149,19 @@ generateFormBtn.addEventListener("click", () => {
     generateTable(width, height);
 });
 
-generateTable(width, height);
+revealBtn.addEventListener("click", revealAll);
 
-function revealAll() {
-    for (let y = 0; y < height; y++) {
-        for (let x = 0; x < width; x++) {
-            revealCluster(x, y);
-        }
-    }
-}
+mineField.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+    mark(e.target.getAttribute("x"), e.target.getAttribute("y"));
+});
+
+mineField.addEventListener("click", (e) => {
+    e.preventDefault();
+    revealCluster(
+        parseInt(e.target.getAttribute("x")),
+        parseInt(e.target.getAttribute("y"))
+    );
+});
+
+generateTable(width, height);
