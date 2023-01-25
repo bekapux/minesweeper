@@ -38,6 +38,7 @@ function generateTable(width, height) {
 function setBombs(width, height) {
     bombs = [];
     bombNumber = setBombNumber(width, height);
+    safeClusterCount = width * height - bombNumber;
     while (bombs.length < bombNumber) {
         const x = getRandom(width);
         const y = getRandom(height);
@@ -102,6 +103,8 @@ function revealCluster(x, y) {
 
     if (bombs.find((bomb) => bomb.x == x && bomb.y == y)) {
         clickedButton.innerHTML = "💥";
+        revealBombs("💥")
+        return;
     } else {
         clickedButton.innerHTML = nearbyBombs;
     }
@@ -129,14 +132,15 @@ function revealCluster(x, y) {
 }
 
 function youWon(){
-    revealBombs();
+    console.log("won");
+    revealBombs("⛳");
     alert('won');
 }
 
-function revealBombs() {
+function revealBombs(symbol) {
     bombs.forEach((item) => {
         document.querySelector(`[x="${item.x}"][y="${item.y}"]`).innerHTML =
-            "⛳";
+        symbol;
     });
 }
 
