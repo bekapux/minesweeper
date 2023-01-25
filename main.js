@@ -8,6 +8,7 @@ let bombNumber = (widthInput.value * heightInput.value) / 10;
 let bombs = [];
 let width = 10;
 let height = 10;
+let safeClusterCount = width * height - bombNumber;
 
 function resetForm() {
     widthInput.value = 10;
@@ -94,8 +95,7 @@ function revealCluster(x, y) {
     const nearbyBombs = countNearbyBombs(x, y);
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
 
-    if(!clickedButton) return;
-
+    if (!clickedButton) return;
 
     if (clickedButton.disabled) {
         return;
@@ -108,6 +108,11 @@ function revealCluster(x, y) {
     }
 
     clickedButton.disabled = true;
+    if (
+        document.querySelectorAll("button:disabled").length == safeClusterCount
+    ) {
+        revealBombs();
+    }
 
     if (nearbyBombs > 0) {
         return;
@@ -122,6 +127,18 @@ function revealCluster(x, y) {
         revealCluster(x - 1, y + 1);
         revealCluster(x - 1, y);
     }
+}
+
+function youWon(){
+    revealBombs();
+    alert('won');
+}
+
+function revealBombs() {
+    bombs.forEach((item) => {
+        document.querySelector(`[x="${item.x}"][y="${item.y}"]`).innerHTML =
+            "⛳";
+    });
 }
 
 generateFormBtn.addEventListener("click", () => {
