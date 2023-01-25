@@ -102,7 +102,7 @@ function revealCluster(x, y) {
     if (
         mineField.querySelectorAll("button:disabled").length == safeClusterCount
     ) {
-        youWon("⛳");
+        youWon();
     }
 
     if (nearbyBombs > 0) {
