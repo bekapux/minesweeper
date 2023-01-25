@@ -16,10 +16,6 @@ function resetForm() {
     heightInput.value = 10;
 }
 
-function setBombNumber(width, height) {
-    return (width * height) / 10;
-}
-
 function generateTable(width, height) {
     isGameOver = false;
     setBombs(width, height);
@@ -35,25 +31,29 @@ function generateTable(width, height) {
     }
     mineField.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
     resetForm();
-}
+    function setBombs(width, height) {
+        function getRandom(n) {
+            return Math.floor(Math.random() * n);
+        }
 
-function setBombs(width, height) {
-    bombs = [];
-    bombNumber = setBombNumber(width, height);
-    safeClusterCount = width * height - bombNumber;
-    while (bombs.length < bombNumber) {
-        const x = getRandom(width);
-        const y = getRandom(height);
+        bombs = [];
+        bombNumber = setBombNumber(width, height);
+        safeClusterCount = width * height - bombNumber;
+        while (bombs.length < bombNumber) {
+            const x = getRandom(width);
+            const y = getRandom(height);
 
-        const itemInArray = bombs.find((bomb) => bomb.x == x && bomb.y == y);
-        if (itemInArray == null) {
-            bombs.push({ x, y });
+            const itemInArray = bombs.find(
+                (bomb) => bomb.x == x && bomb.y == y
+            );
+            if (itemInArray == null) {
+                bombs.push({ x, y });
+            }
+        }
+        function setBombNumber(width, height) {
+            return (width * height) / 10;
         }
     }
-}
-
-function getRandom(n) {
-    return Math.floor(Math.random() * n);
 }
 
 function mark(x, y) {
@@ -72,13 +72,12 @@ function mark(x, y) {
     }
 }
 
-function countNearbyBombs(x, y) {
-    return bombs.filter(
-        (bomb) => Math.abs(bomb.x - x) <= 1 && Math.abs(bomb.y - y) <= 1
-    ).length;
-}
-
 function revealCluster(x, y) {
+    function countNearbyBombs(x, y) {
+        return bombs.filter(
+            (bomb) => Math.abs(bomb.x - x) <= 1 && Math.abs(bomb.y - y) <= 1
+        ).length;
+    }
     if (isGameOver) return;
     const nearbyBombs = countNearbyBombs(x, y);
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
