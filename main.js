@@ -47,7 +47,6 @@ function setBombs(width, height) {
             bombs.push({ x, y });
         }
     }
-    console.log(bombs);
 }
 
 function getRandom(n) {
