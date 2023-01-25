@@ -9,6 +9,7 @@ let bombs = [];
 let width = 10;
 let height = 10;
 let safeClusterCount = width * height - bombNumber;
+let isGameOver;
 
 function resetForm() {
     widthInput.value = 10;
@@ -20,6 +21,7 @@ function setBombNumber(width, height) {
 }
 
 function generateTable(width, height) {
+    isGameOver = false
     setBombs(width, height);
 
     document.querySelector(".button-grid").innerHTML = "";
@@ -92,6 +94,7 @@ mineField.addEventListener("click", (e) => {
 });
 
 function revealCluster(x, y) {
+    if(isGameOver) return;
     const nearbyBombs = countNearbyBombs(x, y);
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
 
@@ -104,6 +107,7 @@ function revealCluster(x, y) {
     if (bombs.find((bomb) => bomb.x == x && bomb.y == y)) {
         clickedButton.innerHTML = "💥";
         revealBombs("💥")
+        isGameOver = true;
         return;
     } else {
         clickedButton.innerHTML = nearbyBombs;
@@ -137,7 +141,7 @@ function youWon(){
     alert('won');
 }
 
-function revealBombs(symbol) {
+function revealBombs(symbol="💥") {
     bombs.forEach((item) => {
         document.querySelector(`[x="${item.x}"][y="${item.y}"]`).innerHTML =
         symbol;
