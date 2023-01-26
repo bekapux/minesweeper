@@ -16,7 +16,7 @@ function resetForm() {
     heightInput.value = 10;
 }
 
-function generateTable(width, height) {
+function generateTable(width, height, isRevealing) {
     isGameOver = false;
     setBombs(width, height);
 
@@ -24,7 +24,7 @@ function generateTable(width, height) {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
             const element = document.createElement("button");
-            element.classList.add('button-c')
+            element.classList.add("button-c");
             element.setAttribute("x", x);
             element.setAttribute("y", y);
             mineField.append(element);
@@ -55,6 +55,7 @@ function generateTable(width, height) {
             return (width * height) / 10;
         }
     }
+    console.log(bombs);
 }
 
 function mark(x, y) {
@@ -73,23 +74,30 @@ function mark(x, y) {
     }
 }
 
-function revealCluster(x, y) {
+function revealCluster(x, y, isRevealing) {
     function countNearbyBombs(x, y) {
         return bombs.filter(
             (bomb) => Math.abs(bomb.x - x) <= 1 && Math.abs(bomb.y - y) <= 1
         ).length;
     }
 
-    function isClusterMarked(button){
-        return clickedButton.innerHTML === "⛳" || clickedButton.innerHTML ==="❓"
+    function isClusterMarked(button) {
+        return (
+            clickedButton.innerHTML === "⛳" || clickedButton.innerHTML === "❓"
+        );
     }
 
-    if (isGameOver) return;
+    if (isGameOver && isRevealing === false) return;
     const nearbyBombs = countNearbyBombs(x, y);
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
-    
-    if (!clickedButton || isClusterMarked(clickedButton) || clickedButton.disabled) return;
-    
+
+    if (
+        !clickedButton ||
+        isClusterMarked(clickedButton) ||
+        clickedButton.disabled
+    )
+        return;
+
     clickedButton.disabled = true;
 
     if (bombs.find((bomb) => bomb.x == x && bomb.y == y)) {
@@ -106,7 +114,9 @@ function revealCluster(x, y) {
     if (
         mineField.querySelectorAll("button:disabled").length == safeClusterCount
     ) {
-        youWon();
+        if (isRevealing === false) {
+            youWon();
+        }
     }
 
     if (nearbyBombs > 0) {
@@ -142,8 +152,8 @@ function youWon() {
 function revealBombs(symbol = "💥") {
     bombs.forEach((item) => {
         const btn = document.querySelector(`[x="${item.x}"][y="${item.y}"]`);
-            btn.innerHTML = symbol;
-            btn.disabled = true;
+        btn.innerHTML = symbol;
+        btn.disabled = true;
     });
 }
 
@@ -166,7 +176,8 @@ mineField.addEventListener("click", (e) => {
     e.preventDefault();
     revealCluster(
         parseInt(e.target.getAttribute("x")),
-        parseInt(e.target.getAttribute("y"))
+        parseInt(e.target.getAttribute("y")),
+        true
     );
 });
 
