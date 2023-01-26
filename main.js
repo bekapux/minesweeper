@@ -84,7 +84,7 @@ function revealCluster(x, y) {
 
     
     if (!clickedButton) return;
-    if(clickedButton.innerHTML === "⛳") return;
+    if(clickedButton.innerHTML === "⛳" || clickedButton.innerHTML ==="❓") return;
 
     if (clickedButton.disabled) {
         return;
