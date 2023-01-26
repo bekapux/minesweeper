@@ -21,8 +21,9 @@ body {
     padding-bottom: 3rem;
 }
 
-.c-shadow{
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+.c-shadow {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
 }
 
 .button-grid {
@@ -30,17 +31,69 @@ body {
     grid-template-columns: repeat(10, 1fr);
 }
 
-button {
-    border-color: #777;
-    background-color: #555;
+/* button {
+    border-color: white;
+    background-color: white;
     padding: 0px;
     height: 2.5rem;
     width: 2.5rem;
-}
+} */
 
 button:disabled,
-button[disabled]{
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
+button[disabled] {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
+/* CSS */
+.button-c {
+    padding: 0px !important;
+    height: 2.5rem !important;
+    width: 2.5rem !important;
+    align-items: center;
+    appearance: none;
+    background-color: #fcfcfd;
+    border-radius: 4px;
+    border-width: 0;
+    box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+    box-sizing: border-box;
+    color: #36395a;
+    cursor: pointer;
+    display: inline-flex;
+    font-family: "JetBrains Mono", monospace;
+    height: 48px;
+    justify-content: center;
+    line-height: 1;
+    list-style: none;
+    overflow: hidden;
+    padding-left: 16px;
+    padding-right: 16px;
+    position: relative;
+    text-align: left;
+    text-decoration: none;
+    transition: box-shadow 0.15s, transform 0.15s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    white-space: nowrap;
+    will-change: box-shadow, transform;
+    font-size: 18px;
+}
+
+.button-c:focus {
+    box-shadow: #d6d6e7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+}
+
+.button-c:hover {
+    box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px,
+        rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #d6d6e7 0 -3px 0 inset;
+    transform: translateY(-2px);
+}
+
+.button-c:active {
+    box-shadow: #d6d6e7 0 3px 7px inset;
+    transform: translateY(2px);
 }

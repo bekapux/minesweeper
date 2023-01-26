@@ -24,6 +24,7 @@ function generateTable(width, height) {
     for (let y = 0; y < height; y++) {
         for (let x = 0; x < width; x++) {
             const element = document.createElement("button");
+            element.classList.add('button-c')
             element.setAttribute("x", x);
             element.setAttribute("y", y);
             mineField.append(element);
