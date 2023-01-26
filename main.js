@@ -89,6 +89,8 @@ function revealCluster(x, y) {
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
     
     if (!clickedButton || isClusterMarked(clickedButton) || clickedButton.disabled) return;
+    
+    clickedButton.disabled = true;
 
     if (bombs.find((bomb) => bomb.x == x && bomb.y == y)) {
         clickedButton.innerHTML = "💥";
@@ -101,7 +103,6 @@ function revealCluster(x, y) {
         }
     }
 
-    clickedButton.disabled = true;
     if (
         mineField.querySelectorAll("button:disabled").length == safeClusterCount
     ) {
@@ -140,8 +141,9 @@ function youWon() {
 
 function revealBombs(symbol = "💥") {
     bombs.forEach((item) => {
-        document.querySelector(`[x="${item.x}"][y="${item.y}"]`).innerHTML =
-            symbol;
+        const btn = document.querySelector(`[x="${item.x}"][y="${item.y}"]`);
+            btn.innerHTML = symbol;
+            btn.disabled = true;
     });
 }
 
