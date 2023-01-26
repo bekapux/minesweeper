@@ -13,47 +13,51 @@
     </head>
     <body>
         <div class="container pt-5">
-            <div class="row">
-                <div class="col-lg-2">
-                    <div class="form-floating">
-                        <input
-                            id="width"
-                            type="number"
-                            class="form-control form-control-sm"
-                            placeholder="width"
-                            value="10"
-                            max="20"
-                        />
-                        <label for="floatingPassword">Width</label>
+            <div class="row gx-5">
+                <div class="col-lg-3 col-sm-12 mb-3">
+                    <div class="c-shadow p-3" style="height: 100%">
+                        <div class="form-floating mb-2">
+                            <input
+                                id="width"
+                                type="number"
+                                class="form-control form-control-sm"
+                                placeholder="width"
+                                value="10"
+                                max="20"
+                            />
+                            <label for="floatingPassword">Width</label>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input
+                                id="height"
+                                type="number"
+                                class="form-control form-control-sm"
+                                placeholder="height"
+                                value="10"
+                                max="20"
+                            />
+                            <label for="floatingPassword">Height</label>
+                        </div>
+                        <button
+                            class="btn btn-primary mb-2"
+                            id="props"
+                            style="width: 100%"
+                        >
+                            Generate Minefield
+                        </button>
+                        <button
+                            class="btn btn-danger"
+                            id="reveal"
+                            style="width: 100%"
+                        >
+                            Reveal
+                        </button>
                     </div>
-                    <div class="form-floating">
-                        <input
-                            id="height"
-                            type="number"
-                            class="form-control form-control-sm"
-                            placeholder="height"
-                            value="10"
-                            max="20"
-                        />
-                        <label for="floatingPassword">Height</label>
-                    </div>
-                    <button
-                        class="btn btn-primary"
-                        id="props"
-                        style="width: 100%"
-                    >
-                        Generate Minefield
-                    </button>
-                    <button
-                        class="btn btn-danger"
-                        id="reveal"
-                        style="width: 100%"
-                    >
-                        Reveal
-                    </button>
                 </div>
-                <div class="col-lg-10">
-                    <div class="wrapper">
+                <div
+                    class="col-lg-9 col-sm-12 mb-3"
+                >
+                    <div class="c-shadow pt-3 pb-3 align-items-center d-flex justify-content-center">
                         <div class="button-grid"></div>
                     </div>
                 </div>
