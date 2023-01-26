@@ -82,7 +82,9 @@ function revealCluster(x, y) {
     const nearbyBombs = countNearbyBombs(x, y);
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
 
+    
     if (!clickedButton) return;
+    if(clickedButton.innerHTML === "⛳") return;
 
     if (clickedButton.disabled) {
         return;
