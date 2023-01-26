@@ -130,6 +130,7 @@ function revealAll() {
 }
 
 function youWon() {
+    isGameOver = true;
     console.log("won");
     revealBombs("⛳");
     alert("won");
