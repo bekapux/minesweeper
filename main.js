@@ -94,7 +94,9 @@ function revealCluster(x, y) {
         isGameOver = true;
         return;
     } else {
-        clickedButton.innerHTML = nearbyBombs;
+        if (nearbyBombs > 0) {
+            clickedButton.innerHTML = nearbyBombs;
+        }
     }
 
     clickedButton.disabled = true;
