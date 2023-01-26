@@ -78,17 +78,16 @@ function revealCluster(x, y) {
             (bomb) => Math.abs(bomb.x - x) <= 1 && Math.abs(bomb.y - y) <= 1
         ).length;
     }
+
+    function isClusterMarked(button){
+        return clickedButton.innerHTML === "⛳" || clickedButton.innerHTML ==="❓"
+    }
+
     if (isGameOver) return;
     const nearbyBombs = countNearbyBombs(x, y);
     const clickedButton = document.querySelector(`[x="${x}"][y="${y}"]`);
-
     
-    if (!clickedButton) return;
-    if(clickedButton.innerHTML === "⛳" || clickedButton.innerHTML ==="❓") return;
-
-    if (clickedButton.disabled) {
-        return;
-    }
+    if (!clickedButton || isClusterMarked(clickedButton) || clickedButton.disabled) return;
 
     if (bombs.find((bomb) => bomb.x == x && bomb.y == y)) {
         clickedButton.innerHTML = "💥";
